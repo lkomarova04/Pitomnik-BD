@@ -1,0 +1,8 @@
+<!-- pet_card.html -->
+<div class="card">
+    <h3>{{ pet.pet_info }}</h3>
+    <p>Возраст: {{ pet.age }}</p>
+    <p>Статус возраста: {{ pet.age_status }}</p>
+    <p>Медицинская карта: {{ pet.medical_record }}</p>
+    <a href="{{ url_for('view_pet_document', pet_id=pet.pet_id) }}" class="btn btn-primary">Посмотреть документ</a>
+</div>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование документа</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="number"], input[type="text"] {
+            background-color: #f9f9f9;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактирование данных документа</h1>
+    <form method="POST">
+        <label>Admin ID:</label>
+        <input type="number" name="admin_id" value="{{ document[1] }}" required><br><br>
+
+        <label>Doctor ID:</label>
+        <input type="number" name="doctor_id" value="{{ document[2] }}" required><br><br>
+
+        <label>Информация о документе:</label>
+        <input type="text" name="pet_doc_info" value="{{ document[3] }}" required><br><br>
+
+        <label>Pet ID:</label>
+        <input type="number" name="pet_id" value="{{ document[4] }}" required><br><br>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <br>
+    <a href="{{ url_for('manage_documents') }}">Назад к документам</a>
+</body>
+</html>

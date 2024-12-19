@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель управления</title>
+</head>
+<body>
+    <h1>Панель управления</h1>
+    <a href="{{ url_for('add_pet') }}">Добавить питомца</a>
+    <h2>Список питомцев</h2>
+    <ul>
+        {% for pet in pets %}
+            <li>{{ pet.pet_info }} - {{ pet.adoption_status }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

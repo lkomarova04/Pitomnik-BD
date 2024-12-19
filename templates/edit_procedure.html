@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать Процедуру</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            width: 80%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h1 {
+            color: #333;
+        }
+        .back-link {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактировать Процедуру</h1>
+
+    <form method="POST">
+        <label for="pet_id">ID питомца</label>
+        <input type="number" id="pet_id" name="pet_id" value="{{ procedure[1] }}" required>
+
+        <label for="medicines_id">ID медикаментов</label>
+        <select id="medicines_id" name="medicines_id" required>
+            {% for medicine in medicines %}
+                <option value="{{ medicine[0] }}" {% if medicine[0] == procedure[2] %}selected{% endif %}>
+                    {{ medicine[1] }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="date_">Дата</label>
+        <input type="text" id="date_" name="date_" value="{{ procedure[3] }}" required placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+
+        <label for="info_procedure">Описание процедуры</label>
+        <textarea id="info_procedure" name="info_procedure" rows="4" required>{{ procedure[4] }}</textarea>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <a href="{{ url_for('view_procedures') }}" class="back-link">Назад к списку процедур</a>
+</body>
+</html>

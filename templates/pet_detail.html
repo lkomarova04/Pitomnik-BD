@@ -1,0 +1,35 @@
+<!-- pet_detail.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о питомце</title>
+</head>
+<body>
+    <h1>Информация о питомце: {{ pet.pet_info }}</h1>
+    <p><strong>Возраст:</strong> {{ pet.age }} лет</p>
+    <p><strong>Статус возраста:</strong> {{ pet.age_status }}</p>
+    <p><strong>Медицинская карта:</strong> {{ pet.medical_record }}</p>
+    <p><strong>Статус усыновления:</strong> {{ pet.adoption_status }}</p>
+
+    <h2>Документы питомца:</h2>
+    {% if pet_documents %}
+        <ul>
+            {% for document in pet_documents %}
+                <li>
+                    <strong>Документ ID: {{ document.pet_document_id }}</strong><br>
+                    <em>{{ document.pet_doc_info }}</em><br>
+                    <em>Администратор ID: {{ document.admin_id }}</em><br>
+                    <em>Врач ID: {{ document.doctor_id }}</em><br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Документы отсутствуют.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('user_dashboard') }}">Назад к списку питомцев</a>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дашборд пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        input, select, button, a {
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button.cancel {
+            background-color: #DC3545;
+        }
+        button.cancel:hover {
+            background-color: #a71d2a;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .pet-info {
+            font-weight: bold;
+            color: #333;
+        }
+        .pet-detail {
+            margin: 5px 0;
+        }
+        .action-buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добро пожаловать, {{ current_user.name_ }}!</h1>
+    <a href="{{ url_for('user_profile') }}">Перейти в профиль</a>
+
+    <h2>Список питомцев:</h2>
+
+    <!-- Форма фильтрации -->
+   <form method="GET" action="{{ url_for('user_dashboard') }}">
+    <label for="age">Возраст:</label>
+    <input type="number" name="age" id="age" placeholder="Возраст" value="{{ request.args.get('age', '') }}">
+    <br>
+
+    <label for="age_status">Статус возраста:</label>
+    <select name="age_status" id="age_status">
+        <option value="">Выберите статус</option>
+        <option value="Молодой" {% if request.args.get('age_status') == 'Молодой' %}selected{% endif %}>Молодой</option>
+        <option value="Взрослый" {% if request.args.get('age_status') == 'Взрослый' %}selected{% endif %}>Взрослый</option>
+        <option value="Пожилой" {% if request.args.get('age_status') == 'Пожилой' %}selected{% endif %}>Пожилой</option>
+    </select>
+    <br>
+
+    <button type="submit">Применить фильтры</button>
+    <a href="{{ url_for('user_dashboard') }}">Очистить фильтры</a>
+</form>
+
+
+    <!-- Список питомцев -->
+    {% if pets %}
+        <ul>
+            {% for pet in pets %}
+                <li>
+                    <div class="pet-info">{{ pet[1] }}</div>  <!-- pet_info -->
+                    <div class="pet-detail"><em>Возраст:</em> {{ pet[2] }} лет</div>  <!-- age -->
+                    <div class="pet-detail"><em>Статус возраста:</em> {{ pet[3] }}</div>  <!-- age_status -->
+                    <div class="pet-detail"><em>Медицинская карта:</em> {{ pet[4] }}</div>  <!-- medical_record -->
+                    <div class="pet-detail"><em>Статус усыновления:</em> {{ pet[5] }}</div>  <!-- adoption_status -->
+
+                    <!-- Ссылка на документ питомца -->
+                    <div class="action-buttons">
+                        <a href="{{ url_for('view_pet_document', pet_id=pet[0]) }}">Посмотреть документ</a>
+                    </div>
+
+                    <!-- Действия в зависимости от статуса усыновления -->
+                    {% if pet[5] == 'Заявка подана' %}
+                        <form method="POST" action="{{ url_for('cancel_adoption', pet_id=pet[0]) }}">
+                            <button type="submit" class="cancel">Отменить заявку</button>
+                        </form>
+                    {% elif pet[5] != 'Усыновлен' %}
+                        <form method="POST" action="{{ url_for('adopt_pet', pet_id=pet[0]) }}">
+                            <button type="submit">Подать заявку на усыновление</button>
+                        </form>
+                    {% endif %}
+
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Питомцы не найдены. Попробуйте изменить фильтры.</p>
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}">Выйти</a>
+</body>
+</html>

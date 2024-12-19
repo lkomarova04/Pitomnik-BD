@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #ffffff;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            margin: 0;
+            color: #4CAF50;
+        }
+
+        p {
+            color: #666;
+        }
+
+        button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #d32f2f;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .home-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            width: 200px;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Профиль пользователя</h1>
+    </header>
+
+    <div class="container">
+        <h2>Ваши заявки на усыновление</h2>
+
+        {% if bids %}
+            <ul>
+    {% for bid in bids %}
+        <li>
+            <h3>{{ bid[1] }}</h3> <!-- bid_info -->
+            <p>Статус заявки: {{ bid[4] }}</p> <!-- adoption_status -->
+
+            {% if bid[4] == 'Не усыновлен' %}
+                <form action="{{ url_for('user_profile') }}" method="POST">
+                    <input type="hidden" name="approve_bid" value="{{ bid[0] }}">
+                    <button type="submit" name="approve" style="background-color: #4CAF50;">Одобрить</button>
+                </form>
+
+                <form action="{{ url_for('user_profile') }}" method="POST">
+                    <input type="hidden" name="bid_id" value="{{ bid[0] }}">
+                    <button type="submit" name="cancel" style="background-color: #f44336;">Отклонить</button>
+                </form>
+            {% else %}
+                <!-- Для усыновленных питомцев -->
+                <p>Заявка одобрена. Дальнейшие действия недоступны.</p>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+        {% else %}
+            <p>У вас нет активных заявок.</p>
+        {% endif %}
+
+
+        <!-- Кнопка для перехода на главную страницу -->
+        <a href="{{ url_for('index') }}" class="home-button">Перейти на главную</a>
+    </div>
+
+</body>
+</html>

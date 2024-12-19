@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Процедуры</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 80%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .button {
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin: 0 5px;
+            display: inline-block;
+        }
+        .edit-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .edit-button:hover {
+            background-color: #45a049;
+        }
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+        }
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+        .back-link {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 16px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Процедуры</h1>
+
+    <!-- Add Procedure Button -->
+    <a href="{{ url_for('add_procedure') }}">
+        <button>Добавить процедуру</button>
+    </a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>ID питомца</th>
+                <th>ID медикаментов</th>
+                <th>Дата</th>
+                <th>Процедура</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for procedure in procedures %}
+            <tr>
+                <td>{{ procedure[0] }}</td>
+                <td>{{ procedure[1] }}</td>
+                <td>{{ procedure[2] }}</td>
+                <td>{{ procedure[3] }}</td>
+                <td>{{ procedure[4] }}</td>
+                <td>
+                    <a href="{{ url_for('edit_procedure', id=procedure[0]) }}" class="button edit-button">Редактировать</a> |
+                    <a href="{{ url_for('delete_procedure', id=procedure[0]) }}" class="button delete-button">Удалить</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('admin_dashboard') }}" class="back-link">Назад к панели администратора</a>
+</body>
+</html>

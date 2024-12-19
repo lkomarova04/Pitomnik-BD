@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документ питомца</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+
+        .info-message {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Документ питомца</h1>
+
+        {% if pet %}
+            <h2>Информация о питомце</h2>
+            <p><span class="label">Имя:</span> {{ pet[1] }}</p>
+            <p><span class="label">Возраст:</span> {{ pet[2] }}</p>
+            <p><span class="label">Возрастной статус:</span> {{ pet[3] }}</p>
+            <p><span class="label">Медицинская карта:</span> {{ pet[4] }}</p>
+            <p><span class="label">Статус усыновления:</span> {{ pet[5] }}</p>
+        {% else %}
+            <p class="error-message">Информация о питомце недоступна.</p>
+        {% endif %}
+
+        {% if pet_document %}
+            <h2>Документ питомца</h2>
+            <p><span class="label">Документ ID:</span> {{ pet_document[0] }}</p>
+            <p><span class="label">ID администратора:</span> {{ pet_document[1] }}</p>
+            <p><span class="label">ID врача:</span> {{ pet_document[2] }}</p>
+            <p><span class="label">Информация о документе:</span> {{ pet_document[3] }}</p>
+        {% else %}
+            <p class="error-message">Документ питомца отсутствует.</p>
+        {% endif %}
+
+        <a href="{{ url_for('user_dashboard') }}">Назад к списку питомцев</a>
+    </div>
+</body>
+</html>

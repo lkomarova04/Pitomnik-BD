@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать поставку</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        form {
+            width: 50%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Редактировать поставку</h1>
+    <form method="POST">
+        <label for="supplier_id">ID Поставщика</label>
+        <input type="number" id="supplier_id" name="supplier_id" value="{{ supply[1] }}" required>
+
+        <label for="medicines_id">ID медикаментов</label>
+        <input type="number" id="medicines_id" name="medicines_id" value="{{ supply[2] }}" required>
+
+        <label for="supply_info">Информация о поставке</label>
+        <textarea id="supply_info" name="supply_info" required>{{ supply[3] }}</textarea>
+
+        <label for="type_of_supply">Тип поставки</label>
+        <select id="type_of_supply" name="type_of_supply" required>
+            <option value="Еженедельная поставка" {% if supply[4] == 'Еженедельная поставка' %}selected{% endif %}>Еженедельная поставка</option>
+            <option value="Ежемесячная поставка" {% if supply[4] == 'Ежемесячная поставка' %}selected{% endif %}>Ежемесячная поставка</option>
+            <option value="Регулярная" {% if supply[4] == 'Регулярная' %}selected{% endif %}>Регулярная</option>
+        </select>
+
+        <label for="date_">Дата поставки</label>
+        <input type="date" id="date_" name="date_" value="{{ supply[5] }}" required>
+
+        <label for="count">Количество</label>
+        <input type="number" id="count" name="count" value="{{ supply[6] }}" required>
+
+        <button type="submit">Обновить поставку</button>
+    </form>
+    <a href="{{ url_for('view_supplies') }}">Назад к поставкам</a>
+</body>
+</html>
